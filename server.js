@@ -16,9 +16,10 @@ app.get('/api', async (req,res)=>{
     res.send(result.recordsets)
     })
 
-// dbOperation.getClosedLoans(125131,'069896-094316').then(res=>{
-//     console.log(res);
-    
-// })
+app.post('/update', async(req,res)=>{
+    await dbOperation.updateClosedLoans(req.body);
+    const result= await dbOperation.getClosedLoans()
+    res.send(result.recordsets)
+})
 
 app.listen(API_PORT,()=>console.log(`listening on port ${API_PORT}`))
