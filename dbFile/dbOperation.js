@@ -23,9 +23,9 @@ const updateClosedLoans=async (closedLoan)=>{
         if(loan.toggleSelected===true){        
         try {
             let pool = await sql.connect(config);
-            let closedLoansk = pool.request().query(`UPDATE [CrystalDB].[dbo].[KEEPER_ClosedLoans] SET [Status] = N'${loan.Status}',[packN]='${loan.packN}' ,[boxN]='${loan.boxN || ''}' WHERE LoanId=${loan.LoanId}`)
-            let closedLoansL = pool.request().query(`UPDATE [CrystalDB].[dbo].[LMS_ClosedLoans] SET [Status] = N'${loan.Status}',[packN]='${loan.packN}' ,[boxN]='${loan.boxN || ''}' WHERE LoanId=${loan.LoanId}`)
-             return closedLoansk , closedLoansL
+            let closedLoansk = pool.request().query(`UPDATE [CrystalDB].[dbo].[KEEPER_ClosedLoans] SET [Status] = N'${loan.Status  || ''}',[packN]='${loan.packN  || ''}' ,[boxN]='${loan.boxN || ''}' WHERE LoanId=${loan.LoanId}`)
+            let closedLoansL = pool.request().query(`UPDATE [CrystalDB].[dbo].[LMS_ClosedLoans] SET [Status] = N'${loan.Status  || ''}',[packN]='${loan.packN  || ''}' ,[boxN]='${loan.boxN || ''}' WHERE LoanId=${loan.LoanId}`)
+         return closedLoansk , closedLoansL
         } catch(error) {
             console.log('err ',error);  
         }}
