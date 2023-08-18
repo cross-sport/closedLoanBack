@@ -16,6 +16,12 @@ app.get('/api', async (req,res)=>{
     res.send(result.recordsets)
     })
 
+app.get('/count', async (req,res)=>{
+    const result= await dbOperation.getChangedStatus();
+    console.log(result);
+    res.send(result.rowsAffected)
+    })    
+
 app.post('/update', async(req,res)=>{
     await dbOperation.updateClosedLoans(req.body);
     const result= await dbOperation.getClosedLoans()

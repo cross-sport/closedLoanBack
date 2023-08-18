@@ -2,8 +2,6 @@ const config = require('./dbConfig');
 sql =require('mssql');
 
 const getClosedLoans=async (personalNo,agreementNo)=>{
-
-    
     try {
         let pool = await sql.connect(config);
         let closedLoans = pool.request().query(`SELECT LoanId,ClientFullName,PersonalNo,AgreementNo,StartDate,CloseDate,ApplicationDept,Status,packN,boxN,toggleSelected FROM [CrystalDB].[dbo].[vClosedLoans] where PersonalNo='${personalNo}' or AgreementNo='${agreementNo}'`)
@@ -14,11 +12,24 @@ const getClosedLoans=async (personalNo,agreementNo)=>{
         
     }
 
-   
+}
+
+const getChangedStatus=async ()=>{
+    try {
+        let pool = await sql.connect(config);
+        let changedStatus = pool.request().query("SELECT LoanId FROM [CrystalDB].[dbo].[vClosedLoans] where Status!=' '")
+        console.log(changedStatus);
+        return changedStatus
+    } catch(error) {
+        console.log(error);
+        
+    }
+
 }
 
 const updateClosedLoans=async (closedLoan)=>{
     closedLoan.savedData.map(async loan=>{
+        
         console.log('closedLoan ',loan);
         if(loan.toggleSelected===true){        
         try {
@@ -33,7 +44,10 @@ const updateClosedLoans=async (closedLoan)=>{
    
 }
 
+
+
 module.exports={
     getClosedLoans,
+    getChangedStatus,
     updateClosedLoans
 }
