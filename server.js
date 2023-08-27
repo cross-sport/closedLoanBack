@@ -34,7 +34,7 @@ app.get('/count', async (req,res)=>{
     
 // })
 
-app.patch('/update', async (req, res) => {
+app.post('/update', async (req, res) => {
     try {
       console.log(req.body);
   
