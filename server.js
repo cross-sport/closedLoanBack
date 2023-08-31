@@ -24,15 +24,12 @@ app.get('/count', async (req,res)=>{
     res.send(result.rowsAffected)
     })    
 
-// app.post('/update', async(req,res)=>{
-//     console.log(req.body);
-    
-//     await dbOperation.updateClosedLoans(req.body);
-//     // const result= await dbOperation.getClosedLoans()
-//     // res.send(result.recordsets)
-//     res.status(200).send({ message: 'Update successful' });
-    
-// })
+    app.get('/packN', async (req,res)=>{
+        const result= await dbOperation.getPackNCount(req.query.packN);
+        delete require.cache[require.resolve('./server')];
+        console.log(result);
+        res.send(result.rowsAffected)
+        })    
 
 app.post('/update', async (req, res) => {
     try {
