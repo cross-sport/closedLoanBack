@@ -41,49 +41,48 @@ const getPackNCount=async (packN)=>{
 
 }
 
-const updateClosedLoans=async (loan)=>{ 
-        try {
-            let pool = await sql.connect(config);
-            let closedLoansk =await pool.request().query(`UPDATE [CrystalDB].[dbo].[KEEPER_ClosedLoans] SET [Status] = N'${loan.Status  || ''}',[packN]='${loan.packN  || ''}' ,[boxN]='${loan.boxN || ''}' WHERE LoanId=${loan.LoanId}`)
-            let closedLoansL =await pool.request().query(`UPDATE [CrystalDB].[dbo].[LMS_ClosedLoans] SET [Status] = N'${loan.Status  || ''}',[packN]='${loan.packN  || ''}' ,[boxN]='${loan.boxN || ''}' WHERE LoanId=${loan.LoanId}`)
-         return closedLoansk , closedLoansL
-        } catch(error) {
-            console.log('err ',error); 
-    }
-   
-}
-
-// const updateClosedLoans = async (loan) => {
-//     console.log('შემოსული', loan);
-//     try {
-//         let pool = await sql.connect(config);
-
-//         let queryK = `
-//             UPDATE [CrystalDB].[dbo].[KEEPER_ClosedLoans]
-//             SET [Status] = @status, [packN] = @packN, [boxN] = @boxN
-//             WHERE LoanId = @loanId
-//         `;
-        
-//         let queryL = `
-//             UPDATE [CrystalDB].[dbo].[LMS_ClosedLoans]
-//             SET [Status] = @status, [packN] = @packN, [boxN] = @boxN
-//             WHERE LoanId = @loanId
-//         `;
-
-//         let request = pool.request();
-//         request.input('status', sql.NVarChar, loan.Status || '');
-//         request.input('packN', sql.NVarChar, loan.packN || '');
-//         request.input('boxN', sql.NVarChar, loan.boxN || '');
-//         request.input('loanId', sql.Int, loan.LoanId);
-
-//         let closedLoansk = await request.query(queryK);
-//         let closedLoansL = await request.query(queryL);
-        
-//         return closedLoansk, closedLoansL;
-//     } catch (error) {
-//         console.log('err ', error);
+// const updateClosedLoans=async (loan)=>{ 
+//         try {
+//             let pool = await sql.connect(config);
+//             let closedLoansk =await pool.request().query(`UPDATE [CrystalDB].[dbo].[KEEPER_ClosedLoans] SET [Status] = N'${loan.Status  || ''}',[packN]='${loan.packN  || ''}' ,[boxN]='${loan.boxN || ''}' WHERE LoanId=${loan.LoanId}`)
+//             let closedLoansL =await pool.request().query(`UPDATE [CrystalDB].[dbo].[LMS_ClosedLoans] SET [Status] = N'${loan.Status  || ''}',[packN]='${loan.packN  || ''}' ,[boxN]='${loan.boxN || ''}' WHERE LoanId=${loan.LoanId}`)
+//          return closedLoansk , closedLoansL
+//         } catch(error) {
+//             console.log('err ',error); 
 //     }
+   
 // }
+
+const updateClosedLoans = async (loan) => {
+    try {
+        let pool = await sql.connect(config);
+
+        let queryK = `
+            UPDATE [CrystalDB].[dbo].[KEEPER_ClosedLoans]
+            SET [Status] = @status, [packN] = @packN, [boxN] = @boxN
+            WHERE LoanId = @loanId
+        `;
+        
+        let queryL = `
+            UPDATE [CrystalDB].[dbo].[LMS_ClosedLoans]
+            SET [Status] = @status, [packN] = @packN, [boxN] = @boxN
+            WHERE LoanId = @loanId
+        `;
+
+        let request = pool.request();
+        request.input('status', sql.NVarChar, loan.Status || '');
+        request.input('packN', sql.NVarChar, loan.packN || '');
+        request.input('boxN', sql.NVarChar, loan.boxN || '');
+        request.input('loanId', sql.Int, loan.LoanId);
+
+        let closedLoansk = await request.query(queryK);
+        let closedLoansL = await request.query(queryL);
+        
+        return closedLoansk, closedLoansL;
+    } catch (error) {
+        console.log('err ', error);
+    }
+}
 
 
 
